@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+     "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.itheima.core.dao.TextDao">
+	<!-- 查询任务、信息 -->
+	<select id="gettext" resultType="text">
+		select * from text order by text_id desc
+		<!-- 执行分页查询 -->
+		<if test="start !=null and rows != null">
+			limit #{start},#{rows}
+		</if>
+	</select>
+
+	<!-- 查询任务信息总数 -->
+	<select id="selecttextListCount" parameterType="text"
+		resultType="Integer">
+		select count(*) from text
+	</select>
+	<!-- 删除 -->
+	<delete id="deletetext" parameterType="Integer">
+		delete from text where text_id=#{id}
+	</delete>
+	<!-- 添加 -->
+	<insert id="createtext" parameterType="text">
+		insert into text(
+		text_name,
+		text_time,
+		text_file
+		)
+		values(#{text_name},
+		#{text_time},
+		#{text_file}
+		)
+	</insert>
+	<!-- 根据id获取客户信息 -->
+	<select id="gettextById" parameterType="Integer" resultType="text">
+		select * from text where text_id = #{id}
+	</select>
+</mapper>
